@@ -22,7 +22,7 @@ STYLES_DIR = THIS_DIR / "styles"
 CSS_FILE = STYLES_DIR / "main.css"
 
 # --- Global Variables ---
-CONTACT_EMAIL = "developer.antoine@gmail.com"
+CONTACT_EMAIL = "andersonb97@gmail.com"
 APP_URL = "https://saas-starter.streamlit.app"
 
 # --- User Authentication ---
