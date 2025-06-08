@@ -1,8 +1,8 @@
 /* Styles for buttons in the form to match UI card style */
 form button, form button:link, form button:visited {
     font-size: 20px;
-    background-color: #f44336;
-    color: white;
+    background-color: #001f3f; /* Navy */
+    color: #ffd700; /* Gold */
     padding: 14px 25px;
     text-align: center;
     text-decoration: none;
@@ -14,15 +14,16 @@ form button, form button:link, form button:visited {
     animation: bounce .6s infinite alternate;
   }
   
-  form button:hover, form button:active {
-    background-color: red;
+form button:hover, form button:active {
+    background-color: #ffd700; /* Gold */
+    color: #001f3f; /* Navy */
   }
   
-  /* Style inputs with type="text", type="email" and textareas in the form */
-  form input[type=text], form input[type=email], form textarea {
+/* Style inputs with type="text", type="email" and textareas in the form */
+form input[type=text], form input[type=email], form textarea {
     width: 100%;
     padding: 12px;
-    border: 1px solid #ccc;
+    border: 1px solid #001f3f; /* Navy border */
     border-radius: 4px;
     box-sizing: border-box;
     margin-top: 6px;
@@ -30,18 +31,66 @@ form button, form button:link, form button:visited {
     resize: vertical;
   }
   
-  /* Bounce animation for buttons */
-  @-webkit-keyframes bounce {
+/* Bounce animation for buttons */
+@-webkit-keyframes bounce {
     to { -webkit-transform: scale(1.1); }
   }
-  @-moz-keyframes bounce {
+@-moz-keyframes bounce {
     to { -moz-transform: scale(1.1); }
   }
-  @keyframes bounce {
+@keyframes bounce {
     to { transform: scale(1.1); }
   }
   
-  /* Hide default Streamlit elements if necessary */
-  #MainMenu {visibility: hidden;}
-  footer {visibility: hidden;}
-  header {visibility: hidden;}
+/* Hide default Streamlit elements if necessary */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+/* Styles for buttons in the form to match UI card style */
+form button, form button:link, form button:visited {
+  font-size: 20px;
+  background-color: #001f3f; /* Navy */
+  color: #ffd700; /* Gold */
+  padding: 14px 25px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+  border-radius: 4px;
+  -webkit-animation: bounce .6s infinite alternate;
+  -moz-animation: bounce .6s infinite alternate;
+  animation: bounce .6s infinite alternate;
+}
+
+form button:hover, form button:active {
+  background-color: #ffd700; /* Gold */
+  color: #001f3f; /* Navy */
+}
+
+/* Style inputs with type="text", type="email" and textareas in the form */
+form input[type=text], form input[type=email], form textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #001f3f; /* Navy border */
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+/* Bounce animation for buttons */
+@-webkit-keyframes bounce {
+  to { -webkit-transform: scale(1.1); }
+}
+@-moz-keyframes bounce {
+  to { -moz-transform: scale(1.1); }
+}
+@keyframes bounce {
+  to { transform: scale(1.1); }
+}
+
+/* Hide default Streamlit elements if necessary */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}

@@ -28,10 +28,6 @@ APP_URL = "https://saas-starter.streamlit.app"
 # --- User Authentication ---
 if 'user' in st.session_state and st.session_state['user']:
     st.sidebar.markdown(f"*Welcome **{st.session_state['user']['email']}***")
-else:
-    with st.sidebar:
-        st.write("User not logged in. Click the button below to log in.")
-        ui.link_button("Log In", key="login", variant="default", url=APP_URL)
 
 # --- Load CSS ---
 def load_css_file(css_file_path):
@@ -43,13 +39,9 @@ load_css_file(CSS_FILE)
 def add_vertical_space(height):
     st.markdown(f'<div style="height: {height}px;"></div>', unsafe_allow_html=True)
 
-# --- Sidebar Customization ---
-github_link = """
-GitHub Repository: <https://github.com/antoineross/streamlit-saas-starter>
-"""
 
 # --- Logo and Title ---
-logo = "public/streamlit-logo.svg"
+logo = "public/smartr-logo.png"
 with st.columns(3)[1]:
     st.image(logo)
 
@@ -65,7 +57,9 @@ st.markdown(
 st.markdown(
     f"""
     <div style="text-align: center;">
-        <h3 style="margin-top: 10px;">A completely open-source Streamlit SaaS Template with a custom Pricing Section with Landing Page, OAuth/Authentication, and Database using Supabase Postgres.</h3>
+        <h3 style="margin-top: 10px;">
+            Smartr is your personal, real-time interview coach—powered by AI to simulate live interviews and deliver tailored feedback that helps you get better, faster.
+        </h3>
     </div>
     """,
     unsafe_allow_html=True
@@ -75,39 +69,6 @@ st.markdown(
 def load_svg(svg_file):
     return Path(svg_file).read_text()
 
-github_svg = load_svg("public/github-logo.svg")
-twitter_svg = load_svg("public/x-logo.svg")
-
-# --- GitHub Stars ---
-def get_github_repo_stars(owner, repo):
-    url = f"https://api.github.com/repos/{owner}/{repo}"
-    response = requests.get(url)
-    if response.status_code == 200:
-        data = response.json()
-        return data['stargazers_count']
-    else:
-        st.error("Failed to fetch data from GitHub API")
-        return None
-
-owner = "antoineross"
-repo = "streamlit-saas-starter"
-
-stars = get_github_repo_stars(owner, repo)
-
-if stars is not None:
-    st.markdown(f'<div style="text-align: center;">Join 10,000 others.</div>', unsafe_allow_html=True)
-    st.markdown(f'<div style="text-align: center;">Open source with {stars} ⭐ on GitHub!</div>', unsafe_allow_html=True)
-
-    st.markdown(f"""
-        <div style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-            <a href="https://github.com/{owner}/{repo}" target="_blank" class="btn btn-default" style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background-color: #24292e; color: white; text-decoration: none; border-radius: 5px;">
-                {github_svg} Visit GitHub Repository
-            </a>
-            <a href="https://twitter.com/antoineross__" target="_blank" class="btn btn-default" style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background-color: black; color: white; text-decoration: none; border-radius: 5px;">
-                {twitter_svg} Follow @antoineross__ on X
-            </a>
-        </div>
-    """, unsafe_allow_html=True)
 
 add_vertical_space(200)
 
@@ -144,153 +105,117 @@ st.write("")
 st.write("---")
 st.subheader("Features")
 
-# Feature 1: Authentication and User Experience
+# Feature 1: Live Interview Experience
 cols1 = st.columns(2)
 with cols1[0]:
-    st.markdown("#### Authentication and User Experience")
-    st.markdown("##### Secure and Modern Design")
+    st.markdown("#### Live Interview Experience")
+    st.markdown("##### Real-Time AI-Powered Simulation")
     st.markdown("""
-Streamlit SaaS Template offers a secure and seamless user experience, leveraging the power of Supabase for authentication and data management. 
+Smartr uses cutting-edge large language models to simulate realistic interview conversations in real time.
 
 Key Features:
-- **Secure OAuth Authentication**: Integrate effortlessly with Supabase for secure user authentication and session management.
-- **Modern UI with shadcn UI**: Utilize modern and attractive UI components for forms and other interactive elements.
-- **User-Friendly Login Page**: A fully-featured landing page that includes an FAQ section, pricing table, login options, contact form, feature highlights, and a hero section.
-- **Vertical Space Function**: Customizable vertical spacing to enhance layout and design.
+- **Interactive Interview Practice**: Engage in live Q&A with an AI interviewer that adapts dynamically.
+- **Voice and Text Input**: Practice naturally with voice responses.
+- **Instant Response Generation**: The AI reacts immediately to keep the flow realistic.
+- **Boost Confidence**: Experience the pressure and pace of real interviews from anywhere.
     """)
 with cols1[1]:
     st.image("public/demo-1.png", use_column_width=True)
 
 add_vertical_space(50)
 
-# Feature 2: Open Source and Community-Driven
+# Feature 2: Tailored Feedback for Growth
 st.write("")
 st.write("---")
 
 cols2 = st.columns(2)
 with cols2[0]:
-    st.markdown("#### Open Source and Community-Driven")
-    st.markdown("##### Join and Contribute")
+    st.markdown("#### Tailored Feedback for Growth")
+    st.markdown("##### Personalized Insights to Prepare You")
     st.markdown("""
-Streamlit SaaS Template is completely open source, inviting contributions from developers around the world. Built using Supabase with Postgres functions for efficient data handling and secure storage.
+After every practice session, Smartr delivers customized feedback designed to help you improve faster and build confidence.
 
 Key Features:
-- **Completely Open Source**: Join our vibrant community, report issues, suggest features, and contribute code and documentation.
-- **Built with Supabase and Postgres**: Reliable backend infrastructure using Supabase with Postgres functions for efficient data management.
-- **Logo Cloud**: Showcase technology stack or partners with a responsive and visually appealing logo cloud.
-- **Github Stars**: Display the number of stars on your GitHub repository to attract more contributors.
+- **Detailed Performance Analysis**: Understand your strengths and areas to improve.
+- **Actionable Tips**: Get specific, personalized suggestions on how to refine your answers.
+- **Track Your Progress**: Review past feedback to measure improvement over time.
+- **Motivate Your Journey**: Stay engaged with meaningful growth milestones.
     """)
 with cols2[1]:
     st.image("public/demo-2.png", use_column_width=True)
-    st.markdown(
-        """
-        <a href="https://github.com/antoineross/streamlit-saas-starter" target="_blank" class="btn btn-default" style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background-color: #24292e; color: white; text-decoration: none; border-radius: 5px;">
-            Start building your app today!
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
-
-add_vertical_space(50)
-
-# Feature 3: Comprehensive Dashboard and Hero Section
-st.write("")
-st.write("---")
-
-cols3 = st.columns(2)
-with cols3[0]:
-    st.markdown("#### Comprehensive Dashboard and Hero Section")
-    st.markdown("##### Monitor and Engage")
-    st.markdown("""
-Streamlit SaaS Template provides a comprehensive dashboard to monitor user subscriptions and a captivating hero section for better engagement.
-
-Key Features:
-- **Dashboard with Subscription Check**: Monitor user subscriptions and provide access to premium features based on subscription status.
-- **Hero Section**: Engaging hero section with clear calls to action to captivate and convert visitors.
-    """)
-with cols3[1]:
-    st.image("public/demo-3.png", use_column_width=True)
-    st.markdown(
-        """
-        <a href="https://supabase.com" target="_blank" class="btn btn-default" style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background-color: #24292e; color: white; text-decoration: none; border-radius: 5px;">
-            Explore API Integrations
-        </a>
-        """,
-        unsafe_allow_html=True,
-    )
 
 
-# --- Demo Section ---
-st.write("")
-st.write("---")
-st.subheader("Demo")
-DEMO_VIDEO = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
+# # --- Demo Section ---
+# st.write("")
+# st.write("---")
+# st.subheader("Demo")
+# DEMO_VIDEO = "https://www.youtube.com/watch?v=dQw4w9WgXcQ"
 
-st.video(DEMO_VIDEO, format="video/mp4", start_time=0)
+# st.video(DEMO_VIDEO, format="video/mp4", start_time=0)
 
-# --- Pricing Section ---
-st.write("")
-st.write("---")
-st.subheader("Pricing")
+# # --- Pricing Section ---
+# st.write("")
+# st.write("---")
+# st.subheader("Pricing")
 
-stripe_link_starter = st.secrets["stripe_link_starter"]
-stripe_link_teams = st.secrets["stripe_link_teams"]
-stripe_link_enterprise = st.secrets["stripe_link_enterprise"]
+# stripe_link_starter = st.secrets["stripe_link_starter"]
+# stripe_link_teams = st.secrets["stripe_link_teams"]
+# stripe_link_enterprise = st.secrets["stripe_link_enterprise"]
 
-cols = st.columns(3)
-with cols[0]:
-    with ui.card(key="pricing1"):
-        ui.element("span", children=["Starter"], className="text-sm font-medium m-2", key="pricing_starter_0")
-        ui.element("h1", children=["$0 per month"], className="text-2xl font-bold m-2", key="pricing_starter_1")
-        ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_starter)
-        ui.element("p", children=["Ideal for individual users who want to get started with the Streamlit SaaS Template."], 
-                    className="text-xs font-medium m-2 mt-2 mb-2", key="pricing_starter_2")
-        ui.element("p", children=["This includes: "], 
-                    className="text-muted-foreground text-xs font-medium m-2", key="pricing_starter_3")
-        ui.element("p", children=["- Access to all basic features."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_4")
-        ui.element("p", children=["- Community support."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_5")
-        ui.element("p", children=["- 1 active project."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_6")
+# cols = st.columns(3)
+# with cols[0]:
+#     with ui.card(key="pricing1"):
+#         ui.element("span", children=["Starter"], className="text-sm font-medium m-2", key="pricing_starter_0")
+#         ui.element("h1", children=["$0 per month"], className="text-2xl font-bold m-2", key="pricing_starter_1")
+#         ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_starter)
+#         ui.element("p", children=["Ideal for individual users who want to get started with the Streamlit SaaS Template."], 
+#                     className="text-xs font-medium m-2 mt-2 mb-2", key="pricing_starter_2")
+#         ui.element("p", children=["This includes: "], 
+#                     className="text-muted-foreground text-xs font-medium m-2", key="pricing_starter_3")
+#         ui.element("p", children=["- Access to all basic features."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_4")
+#         ui.element("p", children=["- Community support."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_5")
+#         ui.element("p", children=["- 1 active project."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_starter_6")
 
-with cols[1]:
-    with ui.card(key="pricing2"):
-        ui.element("span", children=["Teams"], className="text-sm font-medium m-2", key="pricing_pro_0")
-        ui.element("h1", children=["$100 per month"], className="text-2xl font-bold m-2", key="pricing_pro_1")
-        ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_teams)
-        ui.element("p", children=["Perfect for small businesses requiring advanced features."], 
-                    className="text-xs font-medium m-2 mt-2 mb-2", key="pricing_pro_2")
-        ui.element("p", children=["This includes: "], 
-                    className="text-muted-foreground text-xs font-medium m-2", key="pricing_pro_3")
-        ui.element("p", children=["- 10GB Storage Access."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_4")
-        ui.element("p", children=["- 625,000 API calls per month."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_5")
-        ui.element("p", children=["- 10 active projects."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_6")
-        ui.element("p", children=["- Priority email support."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_7")
+# with cols[1]:
+#     with ui.card(key="pricing2"):
+#         ui.element("span", children=["Teams"], className="text-sm font-medium m-2", key="pricing_pro_0")
+#         ui.element("h1", children=["$100 per month"], className="text-2xl font-bold m-2", key="pricing_pro_1")
+#         ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_teams)
+#         ui.element("p", children=["Perfect for small businesses requiring advanced features."], 
+#                     className="text-xs font-medium m-2 mt-2 mb-2", key="pricing_pro_2")
+#         ui.element("p", children=["This includes: "], 
+#                     className="text-muted-foreground text-xs font-medium m-2", key="pricing_pro_3")
+#         ui.element("p", children=["- 10GB Storage Access."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_4")
+#         ui.element("p", children=["- 625,000 API calls per month."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_5")
+#         ui.element("p", children=["- 10 active projects."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_6")
+#         ui.element("p", children=["- Priority email support."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_pro_7")
 
-with cols[2]:
-    with ui.card(key="pricing3"):
-        ui.element("span", children=["Enterprise"], className="text-sm font-medium m-2", key="pricing_enterprise_0")
-        ui.element("h1", children=["$500 per month"], className="text-2xl font-bold m-2", key="pricing_enterprise_1")
-        ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_enterprise)
-        ui.element("p", children=["Designed for large companies and teams with specific needs."], 
-                    className="text-xs font-medium m-2", key="pricing_enterprise_2")
-        ui.element("p", children=["This includes: "], 
-                    className="text-muted-foreground text-xs font-medium m-2", key="pricing_enterprise_3")        
-        ui.element("p", children=["- 50GB Storage Access."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_4")
-        ui.element("p", children=["- Unlimited API calls per month."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_5")
-        ui.element("p", children=["- Unlimited active projects."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_6")
-        ui.element("p", children=["- Dedicated account manager."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_7")
-        ui.element("p", children=["- 24/7 priority support."], 
-                    className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_8")
+# with cols[2]:
+#     with ui.card(key="pricing3"):
+#         ui.element("span", children=["Enterprise"], className="text-sm font-medium m-2", key="pricing_enterprise_0")
+#         ui.element("h1", children=["$500 per month"], className="text-2xl font-bold m-2", key="pricing_enterprise_1")
+#         ui.element("link_button", key="nst2_btn", text="Subscribe", variant="default", className="h-10 w-full rounded-md m-2", url=stripe_link_enterprise)
+#         ui.element("p", children=["Designed for large companies and teams with specific needs."], 
+#                     className="text-xs font-medium m-2", key="pricing_enterprise_2")
+#         ui.element("p", children=["This includes: "], 
+#                     className="text-muted-foreground text-xs font-medium m-2", key="pricing_enterprise_3")        
+#         ui.element("p", children=["- 50GB Storage Access."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_4")
+#         ui.element("p", children=["- Unlimited API calls per month."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_5")
+#         ui.element("p", children=["- Unlimited active projects."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_6")
+#         ui.element("p", children=["- Dedicated account manager."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_7")
+#         ui.element("p", children=["- 24/7 priority support."], 
+#                     className="text-muted-foreground text-xs font-medium m-1", key="pricing_enterprise_8")
 
 # --- FAQ Section ---
 st.write("")
@@ -298,10 +223,34 @@ st.write("---")
 st.subheader("FAQ")
 
 faq = {
-    "What is the Streamlit SaaS Template?": "Streamlit SaaS Template is your comprehensive solution for building, deploying, and managing SaaS applications with Streamlit. This open-source template simplifies the development process with built-in authentication, API integration, and responsive design.",
-    "How can I customize the Streamlit SaaS Template?": "The Streamlit SaaS Template is highly customizable. You can easily modify the UI components, integrate various APIs, and adjust the design to match your brand's identity.",
-    "What features does the Streamlit SaaS Template include?": "The template includes a landing page with FAQ, pricing table, login page, contact form, feature highlights, and a hero section. It also offers a modern, user-friendly login page, and it's completely open-source for community contributions."
+    "What is Smartr?": (
+        "Smartr is an AI-powered platform designed to help you practice real-time technical "
+        "interviews and receive personalized feedback, so you can confidently prepare and "
+        "ace your next interview."
+    ),
+    "How does Smartr work?": (
+        "Smartr simulates live interview experiences using advanced language models, allowing "
+        "you to practice answering questions in real-time. After each session, Smartr provides "
+        "tailored feedback to help you identify strengths and areas for improvement."
+    ),
+    "Who can benefit from Smartr?": (
+        "Whether you're a new grad, an experienced professional, or switching careers, Smartr "
+        "helps anyone preparing for technical interviews gain confidence and improve their skills."
+    ),
+    "What makes Smartr different from other interview prep tools?": (
+        "Unlike static question banks, Smartr offers dynamic, interactive interview simulations "
+        "and personalized feedback driven by AI, making your practice sessions more realistic and actionable."
+    ),
+    "Is Smartr easy to use for non-technical users?": (
+        "Absolutely! Smartr is designed with simplicity in mind, offering an intuitive interface "
+        "that’s welcoming for both technical and non-technical users."
+    ),
+    "How do I get started with Smartr?": (
+        "Simply sign up for an account, upload your target job description, and start practicing "
+        "right away with live AI-powered simulations."
+    )
 }
+
 for question, answer in faq.items():
     with st.expander(question):
         st.write(answer)
