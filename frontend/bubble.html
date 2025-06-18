@@ -1,0 +1,91 @@
+<div id="audio-script-trigger"></div>
+
+<script>
+  async function startAudioStream() {
+    // 1. Get session token from Bubble (you must assign this string yourself)
+    const clientSecret = document.getElementById("session-token")?.value;
+    if (!clientSecret) {
+      console.error("Missing OpenAI client_secret");
+      return;
+    }
+
+    // 2. Get prompt details from your hidden inputs
+    const voice = document.getElementById("voice-input")?.value || "nova";
+    const persona = document.getElementById("persona-input")?.value || "recruiter";
+    const interviewType = document.getElementById("interview-type-input")?.value || "behavioral";
+    const jobDescription = document.getElementById("job-description-input")?.value || "Software Engineer role";
+    const name = document.getElementById("recruiter-name-input")?.value || "Alex";
+
+    // 3. Create WebRTC PeerConnection
+    const pc = new RTCPeerConnection();
+
+    // 4. Set up to receive and play audio
+    const audioEl = new Audio();
+    audioEl.autoplay = true;
+    pc.ontrack = (e) => {
+      audioEl.srcObject = e.streams[0];
+    };
+
+    // 5. Add microphone input to connection
+    const micStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const micTrack = micStream.getAudioTracks()[0];
+    pc.addTrack(micTrack);
+
+    // 6. Create control DataChannel for OpenAI
+    const dc = pc.createDataChannel("oai-events");
+
+    dc.onopen = () => {
+      console.log("[DataChannel Opened] Sending prompt injection...");
+      dc.send(JSON.stringify({
+        type: "session.update",
+        session: {
+          instructions: `
+            You are a recruiter named ${name} conducting a ${interviewType} interview.
+            Persona: ${persona}
+            The candidate is applying for: ${jobDescription}.
+            Keep answers concise and relevant.
+          `.trim(),
+          voice: voice
+        }
+      }));
+
+      dc.send(JSON.stringify({
+        type: "conversation.item.create",
+        item: {
+          type: "message",
+          role: "user",
+          content: [{ type: "input_text", text: "Hi, I’m ready to begin the interview." }]
+        }
+      }));
+
+      dc.send(JSON.stringify({ type: "response.create" }));
+    };
+
+    dc.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      console.log("[OpenAI Event]", data);
+    };
+
+    dc.onerror = (err) => console.error("[DataChannel Error]", err);
+    dc.onclose = () => console.log("[DataChannel Closed]");
+
+    // 7. Create offer + local description
+    const offer = await pc.createOffer();
+    await pc.setLocalDescription(offer);
+
+    // 8. Send offer to OpenAI via SDP POST request
+    const sdpResponse = await fetch("https://api.openai.com/v1/realtime?model=gpt-4o-realtime-preview-2025-06-03", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${clientSecret}`,
+        "Content-Type": "application/sdp"
+      },
+      body: offer.sdp
+    });
+
+    const answerSDP = await sdpResponse.text();
+    await pc.setRemoteDescription({ type: "answer", sdp: answerSDP });
+
+    console.log("[WebRTC Connected]");
+  }
+</script>
