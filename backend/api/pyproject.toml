@@ -8,6 +8,7 @@ dependencies = [
     "asyncio>=3.4.3",
     "fastapi>=0.115.12",
     "numpy>=2.3.0",
+    "python-dotenv>=1.1.0",
     "sounddevice>=0.5.2",
     "soundfile>=0.13.1",
     "uvicorn>=0.34.3",

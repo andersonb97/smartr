@@ -1,12 +1,11 @@
 [project]
-name = "smartr"
+name = "ui"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "pathlib>=1.0.1",
     "streamlit>=1.45.1",
     "streamlit-autorefresh>=1.0.1",
-    "streamlit-webrtc>=0.62.4",
-    "websocket-client>=1.8.0",
 ]
